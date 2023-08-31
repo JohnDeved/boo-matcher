@@ -36,7 +36,7 @@ async function sendLike (id: string, token: string) {
   likeHeaders.append("content-type", "application/json")
   likeHeaders.append("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36")
 
-  fetch("https://api.prod.boo.dating/v1/user/sendLike", {
+  return fetch("https://api.prod.boo.dating/v1/user/sendLike", {
     method: 'PATCH',
     headers: likeHeaders,
     body: JSON.stringify({
