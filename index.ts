@@ -31,18 +31,17 @@ async function getProfiles (token: string) {
 }
 
 async function sendLike (id: string, token: string) {
-  var myHeaders = new Headers();
-  myHeaders.append("authorization", token)
-  myHeaders.append("content-type", "application/json")
-  myHeaders.append("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36")
+  var likeHeaders = new Headers();
+  likeHeaders.append("authorization", token)
+  likeHeaders.append("content-type", "application/json")
+  likeHeaders.append("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36")
 
   fetch("https://api.prod.boo.dating/v1/user/sendLike", {
     method: 'PATCH',
-    headers: myHeaders,
+    headers: likeHeaders,
     body: JSON.stringify({
       user: id
     }),
-    redirect: 'follow'
   })
     .then(response => response.json())
     .then(result => console.log(result))
