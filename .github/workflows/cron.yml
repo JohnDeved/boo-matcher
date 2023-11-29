@@ -4,17 +4,12 @@ on:
   #  - cron: '*/10 * * * *'
 
 jobs:
-  run:
+  run-script:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 19
-          cache: 'npm'
-      - name: "npm install and start"
+      - name: Run script
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
-          npm install
-          npm start
+          bash ./boo.bash
         
