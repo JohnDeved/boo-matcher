@@ -7,13 +7,11 @@ jobs:
   run-bash:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            boo.bash
-          sparse-checkout-cone-mode: true
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Run script
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
-          ls
+          bash boo.bash
         
