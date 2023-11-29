@@ -1,0 +1,19 @@
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+  
+jobs:
+  build-nim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jiro4989/setup-nim-action@v1
+      - run: nim c -d:release --opt:size -d:strip boo.nim
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: boo-nim
+          path: boo

@@ -14,14 +14,3 @@ jobs:
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
           bash boo.bash
-        
-  run-nim:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Run script
-        run: |
-          echo "${{ secrets.ENV_FILE }}" > .env
-          nim c -r boo.nim
