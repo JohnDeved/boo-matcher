@@ -1,0 +1,20 @@
+on:
+  workflow_dispatch:
+  #schedule:
+  #  - cron: '*/10 * * * *'
+
+jobs:        
+  run-nim:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: download binary from artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: boo-nim
+          path: boo
+      
+      - name: run binary
+        run: ./boo
