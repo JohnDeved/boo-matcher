@@ -11,7 +11,6 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           name: boo-nim
-          path: boo
           workflow: build-nim.yml
 
       - name: run binary
