@@ -7,14 +7,12 @@ jobs:
   run-nim:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: download binary from artifact
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: boo-nim
           path: boo
-      
+          workflow: build-nim.yml
+
       - name: run binary
         run: ./boo
