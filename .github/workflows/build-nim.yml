@@ -13,7 +13,7 @@ jobs:
       - uses: jiro4989/setup-nim-action@v1
       - run: nim c -d:release --opt:size -d:strip boo.nim
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: boo-nim
           path: boo
