@@ -11,19 +11,20 @@ function getToken () {
 function getProfiles (token: string) {
   const profilesHeaders = new Headers({ authorization: token, "content-type": "application/json" })
   return fetch("https://api.prod.boo.dating/v1/user/dailyProfiles", { method: 'GET', headers: profilesHeaders })
-    .then(res => res.json() as Promise<ProfileListing>)
+    .then<ProfileListing>(res => res.json())
 }
 
 function sendLike (id: string, token: string) {
   const likeHeaders = new Headers({ authorization: token, "content-type": "application/json" })
   return fetch("https://api.prod.boo.dating/v1/user/sendLike", { method: 'PATCH', headers: likeHeaders, body: JSON.stringify({ user: id }) })
-    .then(res => res.json())
+    .then(res => res.text())
 } 
 
 getToken().then(async google => {
   const { profiles } = await getProfiles(google.access_token)
+  console.log(`Found ${profiles.length} profiles to like.`)
   for (const profile of profiles) {
     console.log(`Liking ${profile.firstName}...`)
-    await sendLike(profile._id, google.access_token)
+    console.log(await sendLike(profile._id, google.access_token))
   }
 })
