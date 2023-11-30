@@ -14,7 +14,4 @@ jobs:
         shell: pwsh
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
-          Get-ChildItem -Path ./ -Recurse
-          ls
-          chmod +x ./build.ps1
-          ./build.ps1
+          ./boo.ps1
