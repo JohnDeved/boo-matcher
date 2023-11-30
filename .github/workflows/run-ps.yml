@@ -1,0 +1,17 @@
+on:
+  workflow_dispatch:
+  #schedule:
+  #  - cron: '*/10 * * * *'
+
+jobs:
+  run-ps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run script
+        shell: pwsh
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+          .\build.ps1
