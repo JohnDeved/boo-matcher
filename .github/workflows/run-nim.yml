@@ -14,4 +14,6 @@ jobs:
           workflow: build-nim.yml
 
       - name: run binary
-        run: ./boo
+        run: |
+          chmod +x boo
+          ./boo
