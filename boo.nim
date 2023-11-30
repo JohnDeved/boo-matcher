@@ -8,10 +8,8 @@ for line in lines(".env"):
 
 proc getToken(): string =
   return newHttpClient(headers = newHttpHeaders({"Content-Type": "application/x-www-form-urlencoded"}))
-    .post(
-      "https://securetoken.googleapis.com/v1/token?key=" & getEnv("GOOGLE_KEY"), 
-      "grant_type=refresh_token&refresh_token=" & getEnv("GOOGLE_TOKEN")
-    )
+    .post("https://securetoken.googleapis.com/v1/token?key=" & getEnv("GOOGLE_KEY"), 
+          "grant_type=refresh_token&refresh_token=" & getEnv("GOOGLE_TOKEN"))
     .body.parseJson["access_token"].getStr
 
 proc getProfiles(token: string): JsonNode =
