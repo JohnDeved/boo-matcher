@@ -14,5 +14,5 @@ jobs:
         shell: pwsh
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
-          ls
+          chmod +x ./build.ps1
           ./build.ps1
