@@ -1,50 +1,23 @@
 import { GOOGLE_KEY, GOOGLE_TOKEN } from "./config"
 import { GoogleApisRes, ProfileListing } from "./types"
 
-async function getToken () {
-  const googleHeaders = new Headers()
-  googleHeaders.append("Content-Type", "application/x-www-form-urlencoded")
-
-  const googleBody = new URLSearchParams()
-  googleBody.append("grant_type", "refresh_token")
-  googleBody.append("refresh_token", GOOGLE_TOKEN)
-
-  return fetch(`https://securetoken.googleapis.com/v1/token?key=${GOOGLE_KEY}`, {
-    method: 'POST',
-    headers: googleHeaders,
-    body: googleBody,
-  })
+function getToken () {
+  const googleHeaders = new Headers({ "Content-Type": "application/x-www-form-urlencoded" })
+  const googleBody = new URLSearchParams({ grant_type: "refresh_token", refresh_token: GOOGLE_TOKEN })
+  return fetch(`https://securetoken.googleapis.com/v1/token?key=${GOOGLE_KEY}`, { method: 'POST', headers: googleHeaders, body: googleBody })
     .then<GoogleApisRes>(res => res.json())
 }
 
-async function getProfiles (token: string) {
-  const profilesHeaders = new Headers()
-  profilesHeaders.append("authorization", token)
-  profilesHeaders.append("content-type", "application/json")
-  profilesHeaders.append("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36")
-
-  return fetch("https://api.prod.boo.dating/v1/user/dailyProfiles", {
-    method: 'GET',
-    headers: profilesHeaders,
-  })
-    .then<ProfileListing>(res => res.json())
+function getProfiles (token: string) {
+  const profilesHeaders = new Headers({ authorization: token, "content-type": "application/json" })
+  return fetch("https://api.prod.boo.dating/v1/user/dailyProfiles", { method: 'GET', headers: profilesHeaders })
+    .then(res => res.json() as Promise<ProfileListing>)
 }
 
-async function sendLike (id: string, token: string) {
-  const likeHeaders = new Headers();
-  likeHeaders.append("authorization", token)
-  likeHeaders.append("content-type", "application/json")
-  likeHeaders.append("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36")
-
-  return fetch("https://api.prod.boo.dating/v1/user/sendLike", {
-    method: 'PATCH',
-    headers: likeHeaders,
-    body: JSON.stringify({
-      user: id
-    }),
-  })
-    .then(response => response.json())
-    .then(result => console.log(result))
+function sendLike (id: string, token: string) {
+  const likeHeaders = new Headers({ authorization: token, "content-type": "application/json" })
+  return fetch("https://api.prod.boo.dating/v1/user/sendLike", { method: 'PATCH', headers: likeHeaders, body: JSON.stringify({ user: id }) })
+    .then(res => res.json())
 } 
 
 getToken().then(async google => {
