@@ -15,5 +15,6 @@ jobs:
 
       - name: run binary
         run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
           chmod +x boo
           ./boo
