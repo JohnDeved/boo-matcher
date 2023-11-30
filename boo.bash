@@ -21,7 +21,7 @@ send_request() {
     header_flags+=("-H" "$header")
   done
 
-  echo "curl -s -X $method $header_flags -d \"$data\" $url" >&2
+  # echo "curl -s -X $method $header_flags -d \"$data\" $url" >&2
   response=$(curl -s -X $method "${header_flags[@]}" -d "$data" $url)
 
   echo $response

@@ -13,7 +13,7 @@ proc sendRequest(http_method: string, url: string, data: string, headers: seq[st
   let headerFlags = headers.map(proc(x: string): string = fmt"-H '{x}'").join(" ")
   let cmd = fmt"curl -s -X {http_method} {headerFlags} -d '{data}' {url}"
   let (output, exitCode) = execCmdEx(cmd)
-  echo "Request: ", cmd
+  # echo "Request: ", cmd
   echo "Output: ", output
   return output
 
