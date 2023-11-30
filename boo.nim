@@ -34,6 +34,7 @@ proc sendLike(id, token: string): string =
 
 let token = getToken().parseJson["access_token"].getStr
 let profiles = getProfiles(token).parseJson["profiles"]
+echo "Found ", profiles.len, " profiles to like"
 for profile in profiles:
   let id = profile["_id"].getStr
   let name = profile["firstName"].getStr
