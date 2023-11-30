@@ -21,9 +21,7 @@ send_request() {
     header_flags+=("-H" "$header")
   done
 
-  # echo "curl -s -X $method $header_flags -d \"$data\" $url" >&2
   response=$(curl -s -X $method "${header_flags[@]}" -d "$data" $url)
-
   echo $response
 }
 
@@ -53,17 +51,13 @@ send_like() {
   send_request "PATCH" "$url" "$data" "${headers[@]}"
 }
 
-main() {
-  token=$(get_token | jq -r '.access_token')
-  profiles=$(get_profiles $token | jq -c '.profiles[]')
+token=$(get_token | jq -r '.access_token')
+profiles=$(get_profiles $token | jq -c '.profiles[]')
 
-  while IFS= read -r profile; do
-    id=$(echo $profile | jq -r '._id')
-    name=$(echo $profile | jq -r '.firstName')
-    echo "Liking $name..."
-    response=$(send_like $id $token)
-    echo "Response: $response"
-  done <<< "$profiles"
-}
-
-main
+while IFS= read -r profile; do
+  id=$(echo $profile | jq -r '._id')
+  name=$(echo $profile | jq -r '.firstName')
+  echo "Liking $name..."
+  response=$(send_like $id $token)
+  echo "Response: $response"
+done <<< "$profiles"
