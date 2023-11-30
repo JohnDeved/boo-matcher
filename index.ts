@@ -1,10 +1,12 @@
-import { GOOGLE_KEY, GOOGLE_TOKEN } from "./config"
+import {config} from 'dotenv'
 import { GoogleApisRes, ProfileListing } from "./types"
+
+config()
 
 function getToken () {
   const googleHeaders = new Headers({ "Content-Type": "application/x-www-form-urlencoded" })
-  const googleBody = new URLSearchParams({ grant_type: "refresh_token", refresh_token: GOOGLE_TOKEN })
-  return fetch(`https://securetoken.googleapis.com/v1/token?key=${GOOGLE_KEY}`, { method: 'POST', headers: googleHeaders, body: googleBody })
+  const googleBody = new URLSearchParams({ grant_type: "refresh_token", refresh_token: process.env.GOOGLE_TOKEN ?? '' })
+  return fetch(`https://securetoken.googleapis.com/v1/token?key=${process.env.GOOGLE_KEY}`, { method: 'POST', headers: googleHeaders, body: googleBody })
     .then<GoogleApisRes>(res => res.json())
 }
 
