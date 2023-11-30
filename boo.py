@@ -1,7 +1,4 @@
-import os
-import http.client
-import json
-import urllib.parse
+import os, http.client, json, urllib.parse
 
 # load the .env file into the environment
 with open('.env', 'r') as f:
